@@ -1,4 +1,5 @@
 import 'dotenv/config';
+require("./config/database");
 
 let appRouter = require('./app');
 let http = require('http');
