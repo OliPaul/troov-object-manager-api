@@ -5,11 +5,12 @@ import {ItemRequestDto} from "../dto/ItemRequestDto";
 import {StoreItem} from "../../use_cases/StoreItem";
 import {ItemDao} from "../dao/ItemDao";
 import {JwtUtils} from "../../../utils/jwt/JwtUtils";
+import {GetItems} from "../../use_cases/GetItems";
 
 let router = Router();
 
 module.exports = {
-    store : router.post('/', JwtUtils.verify, dtoValidation(ItemRequestDto), async function (req: Request, res: Response) {
+    store: router.post('/', JwtUtils.verify, dtoValidation(ItemRequestDto), async function (req: Request, res: Response) {
         const itemRequestDto = new ItemRequestDto();
         itemRequestDto.name = req.body.name;
         itemRequestDto.description = req.body.description;
@@ -17,9 +18,10 @@ module.exports = {
         try {
             res.send(await new StoreItem().execute(itemRequestDto, new ItemDao()));
         } catch (e) {
-            console.log(e);
-            const exception = (e as HttpException);
-            res.status(exception.status).send(exception.serialize());
+            res.status(500).send({error: "Impossible de créer cet article."});
         }
+    }),
+    find: router.get('/', JwtUtils.verify, async function (req: Request, res: Response) {
+        res.send(await new GetItems().execute(new ItemDao()));
     }),
 };

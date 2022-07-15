@@ -13,6 +13,7 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use('/register', register);
 app.use('/sign_in', signIn);
+app.use('/item', item.find);
 app.use('/item/store', item.store);
 
 module.exports = app;
