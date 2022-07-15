@@ -1,11 +1,12 @@
 import {Router, Request, Response} from 'express';
 import dtoValidation from "../../../utils/dto/dtoValidation";
-import HttpException from "../../../exceptions/HttpException";
 import {ItemRequestDto} from "../dto/ItemRequestDto";
 import {StoreItem} from "../../use_cases/StoreItem";
 import {ItemDao} from "../dao/ItemDao";
 import {JwtUtils} from "../../../utils/jwt/JwtUtils";
 import {GetItems} from "../../use_cases/GetItems";
+import {UpdateItemRequestDto} from "../dto/UpdateItemRequestDto";
+import {UpdateItem} from "../../use_cases/UpdateItem";
 
 let router = Router();
 
@@ -18,10 +19,22 @@ module.exports = {
         try {
             res.send(await new StoreItem().execute(itemRequestDto, new ItemDao()));
         } catch (e) {
-            res.status(500).send({error: "Impossible de créer cet article."});
+            res.status(400).send({error: "Impossible de créer cet article."});
         }
     }),
     find: router.get('/', JwtUtils.verify, async function (req: Request, res: Response) {
         res.send(await new GetItems().execute(new ItemDao()));
+    }),
+    update: router.put('/:itemId', JwtUtils.verify, dtoValidation(UpdateItemRequestDto), async function (req: Request, res: Response) {
+        const updateItemRequestDto = new UpdateItemRequestDto();
+        updateItemRequestDto.name = req.body.name;
+        updateItemRequestDto.description = req.body.description;
+        const itemId = req.params.itemId;
+
+        try {
+            res.send(await new UpdateItem().execute(itemId, updateItemRequestDto, new ItemDao()));
+        } catch (e) {
+            res.status(400).send({error: "Impossible de mettre à jour l'article."});
+        }
     }),
 };
