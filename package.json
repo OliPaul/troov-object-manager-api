@@ -2,8 +2,9 @@
   "name": "troov-object-manager-api",
   "version": "1.0.0",
   "description": "Backend for Troov Object Manager",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
+    "start:dev": "nodemon",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
