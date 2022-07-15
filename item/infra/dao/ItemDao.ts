@@ -26,21 +26,20 @@ export class ItemDao implements IItemDao {
     }
 
     async store(item: Item): Promise<Item> {
-        item.createdAt = new Date();
         const itemRepository = new ItemModel(item.serialize());
 
         await itemRepository.save();
         return ItemMapper.mapDaoDocument(itemRepository);
     }
 
-    async update(item: Item): Promise<Item> {
+    async update(itemId: string, data: Object): Promise<Item> {
         return new Promise(((resolve, reject) => {
-            item.updatedAt = new Date();
-            ItemModel.findOneAndUpdate({id: item.id}, item.serialize(), (error: CallbackError, item: HydratedDocument<IItem>) => {
-                if (error) {
+            ItemModel.findOneAndUpdate({id: itemId}, data, {upsert: true, new: true}, (_error: CallbackError, item: HydratedDocument<IItem>) => {
+                if (!item) {
                     reject("Unable to update");
+                    return;
                 }
-                resolve(ItemMapper.mapDaoDocument(item))
+                resolve(ItemMapper.mapDaoDocument(item));
             });
         }));
     }
