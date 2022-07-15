@@ -7,6 +7,7 @@ import {JwtUtils} from "../../../utils/jwt/JwtUtils";
 import {GetItems} from "../../use_cases/GetItems";
 import {UpdateItemRequestDto} from "../dto/UpdateItemRequestDto";
 import {UpdateItem} from "../../use_cases/UpdateItem";
+import {DeleteItem} from "../../use_cases/DeleteItem";
 
 let router = Router();
 
@@ -37,4 +38,13 @@ module.exports = {
             res.status(400).send({error: "Impossible de mettre à jour l'article."});
         }
     }),
+    delete: router.delete('/:itemId', JwtUtils.verify, async function (req: Request, res: Response) {
+        const itemId = req.params.itemId;
+
+        try {
+            res.send(await new DeleteItem().execute(itemId, new ItemDao()));
+        } catch (e) {
+            res.status(400).send({error: "Impossible de supprimer l'article."});
+        }
+    })
 };

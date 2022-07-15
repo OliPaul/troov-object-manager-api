@@ -16,5 +16,6 @@ app.use('/sign_in', signIn);
 app.use('/item', item.find);
 app.use('/item/store', item.store);
 app.use('/item/update', item.update);
+app.use('/item/delete', item.delete);
 
 module.exports = app;
