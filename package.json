@@ -1,0 +1,19 @@
+{
+  "name": "troov-object-manager-api",
+  "version": "1.0.0",
+  "description": "Backend for Troov Object Manager",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OliPaul/troov-object-manager-api.git"
+  },
+  "author": "Paul Olivier AHOUA",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/OliPaul/troov-object-manager-api/issues"
+  },
+  "homepage": "https://github.com/OliPaul/troov-object-manager-api#readme"
+}
