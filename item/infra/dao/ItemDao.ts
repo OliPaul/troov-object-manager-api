@@ -8,9 +8,15 @@ import {IItem} from "../../domain/interfaces/IItem";
 export class ItemDao implements IItemDao {
     delete(itemId: string): Promise<string> {
         return new Promise(((resolve, reject) => {
-            ItemModel.deleteOne({id: itemId}, (error: CallbackError) => {
+            ItemModel.findOneAndRemove({id: itemId}, (error: CallbackError, item: HydratedDocument<IItem>) => {
                 if (error) {
                     reject("Unable to delete");
+                    return;
+                }
+
+                if (!item) {
+                    reject("Article inconnu");
+                    return;
                 }
                 resolve(itemId);
             });
@@ -34,9 +40,13 @@ export class ItemDao implements IItemDao {
 
     async update(itemId: string, data: Object): Promise<Item> {
         return new Promise(((resolve, reject) => {
-            ItemModel.findOneAndUpdate({id: itemId}, data, {upsert: true, new: true}, (_error: CallbackError, item: HydratedDocument<IItem>) => {
-                if (!item) {
+            ItemModel.findOneAndUpdate({id: itemId}, data, {upsert: true, new: true}, (error: CallbackError, item: HydratedDocument<IItem>) => {
+                if (error) {
                     reject("Unable to update");
+                    return;
+                }
+                if (!item) {
+                    reject("Article inconnu");
                     return;
                 }
                 resolve(ItemMapper.mapDaoDocument(item));
