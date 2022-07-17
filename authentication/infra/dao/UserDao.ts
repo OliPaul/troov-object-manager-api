@@ -32,10 +32,12 @@ export class UserDao implements IUserDao {
             UserModel.findOne({email: userEmail}, (_error: CallbackError, user: HydratedDocument<IUser>) => {
                 if (!user) {
                     resolve(null);
+                    return;
                 }
 
                 if (!compareSync(userPassword, user.password)) {
                     resolve(null);
+                    return;
                 }
 
                 resolve(UserMapper.mapDaoDocument(user));
