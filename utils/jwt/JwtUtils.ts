@@ -13,14 +13,14 @@ export class JwtUtils {
         try {
             const token = req.header("Authorization")?.split(" ")[1];
             if (!token) {
-                res.status(401).send(new HttpException(401, "Veuillez vous authentifier svp.").serialize());
+                res.status(401).send(new HttpException(401, "Veuillez vous authentifier svp.").toJson());
                 return;
             }
 
             jwt.verify(token, process.env.JWT_SECRET || "");
             next();
         } catch (e) {
-            res.status(401).send(new HttpException(401, "Veuillez vous authentifier svp.").serialize())
+            res.status(401).send(new HttpException(401, "Veuillez vous authentifier svp.").toJson())
         }
     }
 }

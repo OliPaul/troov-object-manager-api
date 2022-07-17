@@ -13,7 +13,7 @@ function dtoValidation(type: any, skipMissingProperties = false): RequestHandler
                 if (errors.length > 0) {
                     // Get the first error encountered
                     const dtoErrors = (Object as any).values(errors[0].constraints)[0];
-                    res.status(400).send(new HttpException(400, dtoErrors).serialize());
+                    res.status(400).send(new HttpException(400, dtoErrors).toJson());
                 } else {
                     // Sanitize the object and call the next middleware
                     sanitize(dtoObject);

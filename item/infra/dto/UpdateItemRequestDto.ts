@@ -7,7 +7,7 @@ export class UpdateItemRequestDto {
     @Trim()
     public description?: string;
 
-    serialize() {
+    toJson() {
         return {
             name: this.name,
             description: this.description

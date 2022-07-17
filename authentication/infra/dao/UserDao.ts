@@ -9,7 +9,7 @@ import {compareSync} from "bcryptjs";
 export class UserDao implements IUserDao {
 
     async createUser(user: User): Promise<User> {
-        const userRepository = new UserModel(user.serialize());
+        const userRepository = new UserModel(user.toJson());
         await userRepository.save();
 
         return UserMapper.mapDaoDocument(userRepository);

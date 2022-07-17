@@ -11,7 +11,7 @@ export class User implements IUser {
         this._password = password;
     }
 
-    serialize(): Object {
+    toJson(): Object {
         return {
             email: this._email,
             name: this._name,

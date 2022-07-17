@@ -16,7 +16,7 @@ export class Item implements IItem {
         this._updatedAt = updatedAt;
     }
 
-    serialize(): Object {
+    toJson(): Object {
         return {
             id: this.id,
             name: this.name,

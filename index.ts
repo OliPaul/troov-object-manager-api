@@ -4,7 +4,7 @@ require("./config/database");
 let appRouter = require('./app');
 let http = require('http');
 
-const port = process.env.PORT || '3000';
+const port = process.env.PORT || '3001';
 appRouter.set('port', port);
 
 // Create server

@@ -32,7 +32,7 @@ export class ItemDao implements IItemDao {
     }
 
     async store(item: Item): Promise<Item> {
-        const itemRepository = new ItemModel(item.serialize());
+        const itemRepository = new ItemModel(item.toJson());
 
         await itemRepository.save();
         return ItemMapper.mapDaoDocument(itemRepository);

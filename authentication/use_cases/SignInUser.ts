@@ -12,7 +12,7 @@ export class SignInUser {
             throw new UserNotFoundException(404, "Identifiants invalides.");
         }
 
-        const token = JwtUtils.sign(user.serialize())
+        const token = JwtUtils.sign(user.toJson())
         return new SignInResponseDto(user.name, user.email, token);
     }
 }

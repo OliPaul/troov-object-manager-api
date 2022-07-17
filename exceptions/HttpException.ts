@@ -7,7 +7,7 @@ class HttpException extends Error {
         this.message = message;
     }
 
-    serialize(): Object {
+    toJson(): Object {
         return {
             error: this.message
         }
