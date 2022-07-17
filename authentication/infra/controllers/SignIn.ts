@@ -14,8 +14,8 @@ module.exports = router.post('/', dtoValidation(SignInRequestDto), async functio
 
     try {
         res.send(await new SignInUser().execute(signInRequestDto, new UserDao()));
-    } catch (e) {
+    } catch (e: any) {
         const exception = (e as HttpException);
-        res.status(exception.status).send({error: exception.message});
+        res.status(400).send({error: e.message});
     }
 });

@@ -15,8 +15,8 @@ module.exports = router.post('/', dtoValidation(RegisterRequestDto), async funct
 
     try {
         res.send(await new RegisterNewUser().execute(registerRequestDto, new UserDao()));
-    } catch (e) {
+    } catch (e: any) {
         const exception = (e as HttpException);
-        res.status(exception.status).send({error: exception.message});
+        res.status(exception.status).send({error: e.message});
     }
 });
